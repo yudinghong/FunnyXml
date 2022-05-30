@@ -42,16 +42,23 @@ namespace FunnyXML {
         AttributeValue & operator [](string key);
         bool hasAttribute(string attributeName);
         // 添加子节点
-        void addChild(FunnyNode node);
-        void insertBefore(int index, FunnyNode node);
-        void insertAfter(int index, FunnyNode node);
+        void addChild(FunnyNode *node);
+        void insertBefore(int index, FunnyNode *node);
+        void insertAfter(int index, FunnyNode *node);
+
+    public:
+        FunnyNode *parent;
+        FunnyNode *preSibling;
+        FunnyNode *nextSibling;
 
     private:
         string tagName;
         map<string, AttributeValue> attribute;
         // 去除标签的文本内容
         string content;
-        vector<FunnyNode> children;
+        vector<FunnyNode *> children;
+        PARSE_STATE parseState;
+
     };
 
 }

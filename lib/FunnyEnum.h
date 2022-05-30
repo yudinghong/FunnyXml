@@ -11,6 +11,11 @@ namespace FunnyXML {
         CR,
         LF
     };
+
+    enum PARSE_STATE {
+        PARSE_START,
+        PARSE_END
+    };
 }
 
 
