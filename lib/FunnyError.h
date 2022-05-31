@@ -7,6 +7,7 @@
 
 #define  FUNNY_NO_ERROR                                 0
 
+#define PARSE_NO_START_TAG_ERROR                        -1
 #define PARSE_ATTRIBUTE_ERROR
 
 

@@ -76,8 +76,7 @@ namespace FunnyXML {
         };
         string tagName;
         map<string, AttributeValue> attributes;
-        // 去除标签的文本内容
-        string content;
+        // 纯文字产生一个特殊的文本节点, 外部得不到节点结构, 但是能取到节点值
         vector<FunnyNode *> children;
         NODE_PARSE_STATE parseState;
         bool isValidNode;

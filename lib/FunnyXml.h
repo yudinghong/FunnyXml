@@ -22,10 +22,14 @@ namespace FunnyXML {
         string getLastErrMessage();
 
     private:
+        void setError(int errCode);
+
         bool isBlank(char c);
+        bool isLT(char c);
+        bool isGT(char c);
 
     private:
-        enum PARSE_STATE {PARSE_START, PARSE_TAG, PARSE_VERSION, PARSE_NODE, PARSE_END};
+        enum PARSE_STATE {PARSE_START, PARSE_TAG, PARSE_VERSION, PARSE_NODE, PARSE_END, PARSE_ERR};
         int lastErrCode;
         string lastErrMessage;
     };
