@@ -10,17 +10,29 @@
 #include <list>
 #include <vector>
 
+#include "./FunnyStruct.h"
+
 using std::map;
 using std::list;
 using std::vector;
+using std::string;
 
 namespace FunnyXML {
     class AttributeValue {
     public:
+        AttributeValue();
         AttributeValue(string value);
-        void toString();
-        void toInt();
-        void toDouble();
+        AttributeValue(int value);
+        AttributeValue(double value);
+        void setValue(string value);
+        void setValue(int value);
+        void setValue(double value);
+        AttributeValue &operator = (string value);
+        AttributeValue &operator = (int value);
+        AttributeValue &operator = (double value);
+        string toString();
+        int toInt();
+        double toDouble();
 
     private:
         string value;
@@ -29,13 +41,17 @@ namespace FunnyXML {
     class FunnyNode {
     public:
         // 构造节点
-        FunnyNode(string xml);
+        FunnyNode();
+        FunnyNode(string tagName);
         FunnyNode(string tagName, vector<string> attributes);
         FunnyNode(string tagName, map<string, string> attributes);
+        // 如果是非有效节点
+        void setTagName(string tagName);
+
         // 查找子元素
-        vector<FunnyNode> findChildrenByTagName(string tagName);
+        vector<FunnyNode *> findChildrenByTagName(string tagName);
         // 属性操作
-        AtrributeValue getAttribute(string attributeName);
+        AttributeValue getAttribute(string attributeName);
         void addAttribute(string attributeName, string value);
         void addAttribute(string attributeName, int value);
         void addAttribute(string attributeName, double value);
@@ -43,8 +59,10 @@ namespace FunnyXML {
         bool hasAttribute(string attributeName);
         // 添加子节点
         void addChild(FunnyNode *node);
-        void insertBefore(int index, FunnyNode *node);
-        void insertAfter(int index, FunnyNode *node);
+        void insertChildBefore(int index, FunnyNode *node);
+        void insertChildAfter(int index, FunnyNode *node);
+        void insertBefore(FunnyNode *node);
+        void insertAfter(FunnyNode *node);
 
     public:
         FunnyNode *parent;
@@ -52,13 +70,18 @@ namespace FunnyXML {
         FunnyNode *nextSibling;
 
     private:
+        enum NODE_PARSE_STATE {
+            PARSE_START,
+            PARSE_END
+        };
         string tagName;
-        map<string, AttributeValue> attribute;
+        map<string, AttributeValue> attributes;
         // 去除标签的文本内容
         string content;
         vector<FunnyNode *> children;
-        PARSE_STATE parseState;
-
+        NODE_PARSE_STATE parseState;
+        bool isValidNode;
+        vector<XML_Namespace> namespaces;
     };
 
 }

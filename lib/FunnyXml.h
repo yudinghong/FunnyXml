@@ -7,14 +7,27 @@
 
 #include <string>
 
+#include "./FunnyXmlDoc.h"
+#include "./FunnyError.h"
+
+using std::string;
+
 namespace FunnyXML {
     class FunnyXml {
     public:
+        FunnyXml();
+
+        FunnyXmlDoc *parse(string xml);
+        int getLastErrCode();
+        string getLastErrMessage();
 
     private:
-        string version;
+        bool isBlank(char c);
 
-
+    private:
+        enum PARSE_STATE {PARSE_START, PARSE_TAG, PARSE_VERSION, PARSE_NODE, PARSE_END};
+        int lastErrCode;
+        string lastErrMessage;
     };
 }
 
